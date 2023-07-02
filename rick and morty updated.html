@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rick and Morty API Demo</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .character-card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .character-card img {
+      max-width: 150px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    hr {
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-4">Rick and Morty Characters</h1>
+    <div id="characters"></div>
+  </div>
+
+  <script>
+    const apiUrl = 'https://rickandmortyapi.com/api/character';
+
+    function fetchCharacters() {
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          displayCharacters(data.results);
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        });
+    }
+
+    function displayCharacters(characters) {
+      const charactersDiv = document.getElementById('characters');
+      let characterHtml = '';
+
+      characters.forEach(character => {
+        characterHtml += `
+          <div class="character-card">
+            <h2>${character.name}</h2>
+            <img src="${character.image}" alt="${character.name}" class="img-fluid">
+            <p><strong>Status:</strong> ${character.status}</p>
+            <p><strong>Species:</strong> ${character.species}</p>
+            <p><strong>Gender:</strong> ${character.gender}</p>
+          </div>
+          <hr>
+        `;
+      });
+
+      charactersDiv.innerHTML = characterHtml;
+    }
+
+    fetchCharacters();
+  </script>
+</body>
+</html>
