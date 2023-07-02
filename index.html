@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weather App</h1>
+  <div id="weather"></div>
+
+  <script>
+    // OpenWeatherMap API endpoint
+    const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
+    const apiKey = 'YOUR_API_KEY'; // Replace with your OpenWeatherMap API key
+
+    // Function to fetch weather data
+    function fetchWeather(city) {
+      const url = `${apiUrl}?q=${city}&appid=${apiKey}&units=metric`;
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          displayWeather(data);
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        });
+    }
+
+    // Function to display weather data
+    function displayWeather(data) {
+      const weatherDiv = document.getElementById('weather');
+      weatherDiv.innerHTML = `
+        <h2>${data.name}</h2>
+        <p>Temperature: ${data.main.temp}°C</p>
+        <p>Weather: ${data.weather[0].description}</p>
+      `;
+    }
+
+    // Entry point
+    const city = 'London'; // Replace with the desired city
+    fetchWeather(city);
+  </script>
+</body>
+</html>

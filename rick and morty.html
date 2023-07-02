@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rick and Morty API Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rick and Morty Characters</h1>
+  <div id="characters"></div>
+
+  <script>
+    // Rick and Morty API endpoint
+    const apiUrl = 'https://rickandmortyapi.com/api/character';
+
+    // Function to fetch character data
+    function fetchCharacters() {
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          displayCharacters(data.results);
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        });
+    }
+
+    // Function to display character data
+    function displayCharacters(characters) {
+      const charactersDiv = document.getElementById('characters');
+      let characterHtml = '';
+
+      characters.forEach(character => {
+        characterHtml += `
+          <div>
+            <h2>${character.name}</h2>
+            <img src="${character.image}" alt="${character.name}" width="150">
+            <p>Status: ${character.status}</p>
+            <p>Species: ${character.species}</p>
+            <p>Gender: ${character.gender}</p>
+          </div>
+          <hr>
+        `;
+      });
+
+      charactersDiv.innerHTML = characterHtml;
+    }
+
+    // Entry point
+    fetchCharacters();
+  </script>
+</body>
+</html>
